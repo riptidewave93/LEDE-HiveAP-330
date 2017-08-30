@@ -1,7 +1,7 @@
 # LEDE-HiveAP-330
 Bringup for the Aerohve HiveAP 330 Access Point on LEDE!
 
-Currently based on commit [69da83d9f12e4e48b546fc3fc3ff555034959211](https://github.com/lede-project/source/commit/69da83d9f12e4e48b546fc3fc3ff555034959211)
+Currently based on commit [7a9410618d97c628b2b6f3bcf5ea2af4546124a5](https://github.com/lede-project/source/commit/7a9410618d97c628b2b6f3bcf5ea2af4546124a5)
 
 Building
 -----
@@ -15,11 +15,13 @@ Note that you will need to run a modify on the first compile to select the `Free
 
 Booting
 -----
-Coming Soon
+Coming soon
 
 Flashing
 -----
-Coming Soon
+  1. Hookup to the Console port (speed 9600) and power on the device and enter the bootloader. Note you may need to enter a password of `administrator` or `AhNf?d@ta06` if prompted.
+
+More info coming soon
 
 To Do
 -----

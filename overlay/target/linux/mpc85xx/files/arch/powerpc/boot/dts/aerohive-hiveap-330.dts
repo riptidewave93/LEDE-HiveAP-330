@@ -9,10 +9,14 @@
  * option) any later version.
  */
 
-/include/ "p1020si-pre.dtsi"
+/include/ "fsl/p1020si-pre.dtsi"
 / {
 	model = "Aerohive HiveAP-330";
 	compatible = "aerohive,hiveap330", "fsl,P1020RDB";
+
+	chosen {
+			bootargs = "console=ttyS0,115200";
+		};
 
 	memory {
 		device_type = "memory";
@@ -174,4 +178,4 @@
 	};
 };
 
-/include/ "p1020si-post.dtsi"
+/include/ "fsl/p1020si-post.dtsi"
