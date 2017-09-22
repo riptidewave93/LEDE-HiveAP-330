@@ -7,7 +7,7 @@
 
 define Profile/hiveap-330
 	NAME:=Aerohive HiveAP-330
-	PACKAGES:=kmod-usb-core kmod-usb2 kmod-usb-storage kmod-fs-ext4 kmod-fs-vfat kmod-ath9k wpad-mini
+	PACKAGES:=kmod-usb-storage kmod-fs-ext4 kmod-fs-vfat kmod-ath9k wpad-mini
 endef
 
 define Profile/hiveap-330/Description
