@@ -15,7 +15,7 @@
 	compatible = "aerohive,hiveap330", "fsl,P1020RDB";
 
 	chosen {
-			bootargs = "console=ttyS0,115200";
+			bootargs = "console=ttyS0,9600 pci=realloc";
 		};
 
 	memory {
@@ -25,16 +25,126 @@
 	board_lbc: lbc: localbus@ffe05000 {
 		reg = <0 0xffe05000 0 0x1000>;
 		ranges = <0x0 0x0 0x0 0xec000000 0x4000000>;
+
+		nor@0,0 {
+			#address-cells = <1>;
+			#size-cells = <1>;
+			compatible = "cfi-flash";
+			reg = <0x0 0x0 0x4000000>;
+			bank-width = <2>;
+			device-width = <1>;
+
+			partition@0 {
+				reg = <0x0 0x40000>;
+				label = "DTB Image";
+			};
+
+			partition@40000 {
+				reg = <0x40000 0x2800000>;
+				label = "App Image";
+			};
+
+			partition@2840000 {
+				reg = <0x2840000 0x800000>;
+				label = "Kernel Image";
+			};
+
+			partition@3040000 {
+				reg = <0x3040000 0xec0000>;
+				label = "JFFS2";
+			};
+
+			partition@3f00000 {
+				reg = <0x3f00000 0x20000>;
+				label = "Hardware Info";
+			};
+
+			partition@3f20000 {
+				reg = <0x3f20000 0x20000>;
+				label = "Static Boot Info";
+				read-only;
+			};
+
+			partition@3f40000 {
+				reg = <0x3f40000 0x20000>;
+				label = "Static Boot Info Backup";
+				read-only;
+			};
+
+			partition@3f60000 {
+				reg = <0x3f60000 0x20000>;
+				label = "Uboot Env";
+			};
+
+			partition@3f80000 {
+				reg = <0x3f80000 0x80000>;
+				label = "Uboot";
+				read-only;
+			};
+		};
 	};
 
 	board_soc: soc: soc@ffe00000 {
 		ranges = <0x0 0x0 0xffe00000 0x100000>;
+
+		i2c@3000 {
+			rtc@68 {
+				compatible = "dallas,ds1339";
+				reg = <0x68>;
+			};
+		};
+
+		mdio@24000 {
+			phy0: ethernet-phy@0 {
+				interrupts = <3 1 0 0>;
+				reg = <0x1>;
+			};
+
+			phy1: ethernet-phy@1 {
+				interrupts = <2 1 0 0>;
+				reg = <0x2>;
+			};
+		};
+
+		mdio@25000 {
+			status = "disabled";
+		};
+
+		mdio@26000 {
+			status = "disabled";
+		};
+
+		enet0: ethernet@b0000 {
+			status = "okay";
+			phy-handle = <&phy0>;
+			phy-connection-type = "rgmii-id";
+
+		};
+
+		enet1: ethernet@b1000 {
+			status = "disabled";
+		};
+
+		enet2: ethernet@b2000 {
+			status = "okay";
+			phy-handle = <&phy1>;
+			phy-connection-type = "rgmii-id";
+		};
+
+		usb@22000 {
+			phy_type = "ulpi";
+			dr_mode = "host";
+		};
+
+		usb@23000 {
+			status = "disabled";
+		};
 	};
 
 	pci0: pcie@ffe09000 {
-		reg = <0 0xffe09000 0 0x1000>;
-		ranges = <0x2000000 0x0 0xa0000000 0 0xa0000000 0x0 0x20000000
-			  0x1000000 0x0 0x00000000 0 0xffc10000 0x0 0x10000>;
+		reg = <0x0 0xffe09000 0x0 0x1000>;
+		ranges = <0x2000000 0x0 0xa0000000 0x0 0xa0000000 0x0 0x20000000
+			0x1000000 0x0 0x00000000 0x0 0xffc30000 0x0 0x10000>;
 		pcie@0 {
 			ranges = <0x2000000 0x0 0xa0000000
 				  0x2000000 0x0 0xa0000000
@@ -47,12 +157,12 @@
 	};
 
 	pci1: pcie@ffe0a000 {
-		reg = <0 0xffe0a000 0 0x1000>;
-		ranges = <0x2000000 0x0 0x80000000 0 0x80000000 0x0 0x20000000
-			  0x1000000 0x0 0x00000000 0 0xffc20000 0x0 0x10000>;
+		reg = <0x0 0xffe0a000 0x0 0x1000>;
+		ranges = <0x2000000 0x0 0xc0000000 0x0 0xc0000000 0x0 0x20000000
+		      0x1000000 0x0 0x00000000 0x0 0xffc20000 0x0 0x10000>;
 		pcie@0 {
-			ranges = <0x2000000 0x0 0x80000000
-				  0x2000000 0x0 0x80000000
+			ranges = <0x2000000 0x0 0xc0000000
+			      0x2000000 0x0 0xc0000000
 				  0x0 0x20000000
 
 				  0x1000000 0x0 0x0
@@ -61,121 +171,4 @@
 		};
 	};
 };
-
-&board_lbc {
-	nor@0,0 {
-		#address-cells = <1>;
-		#size-cells = <1>;
-		compatible = "cfi-flash";
-		reg = <0x0 0x0 0x4000000>;
-		bank-width = <2>;
-		device-width = <1>;
-
-		partition@0 {
-			reg = <0x0 0x40000>;
-			label = "DTB Image";
-		};
-
-		partition@40000 {
-			reg = <0x40000 0x2800000>;
-			label = "App Image";
-		};
-
-		partition@2840000 {
-			reg = <0x2840000 0x800000>;
-			label = "Kernel Image";
-		};
-
-		partition@3040000 {
-			reg = <0x3040000 0xec0000>;
-			label = "JFFS2";
-		};
-
-		partition@3f00000 {
-			reg = <0x3f00000 0x20000>;
-			label = "Hardware Info";
-		};
-
-		partition@3f20000 {
-			reg = <0x3f20000 0x20000>;
-			label = "Static Boot Info";
-			read-only;
-		};
-
-		partition@3f40000 {
-			reg = <0x3f40000 0x20000>;
-			label = "Static Boot Info Backup";
-			read-only;
-		};
-
-		partition@3f60000 {
-			reg = <0x3f60000 0x20000>;
-			label = "Uboot Env";
-		};
-
-		partition@3f80000 {
-			reg = <0x3f80000 0x80000>;
-			label = "Uboot";
-			read-only;
-		};
-	};
-};
-
-&board_soc {
-	i2c@3000 {
-		rtc@68 {
-			compatible = "dallas,ds1339";
-			reg = <0x68>;
-		};
-	};
-
-	usb@22000 {
-		phy_type = "ulpi";
-		dr_mode = "host";
-	};
-
-	usb@23000 {
-		status = "disabled";
-	};
-
-	mdio@24000 {
-		phy0: ethernet-phy@0 {
-			interrupt-parent = <&mpic>;
-			interrupts = <3 1>;
-			reg = <0x0>;
-			linux,phandle = <0x3>;
-		};
-
-		phy1: ethernet-phy@1 {
-			interrupt-parent = <&mpic>;
-			interrupts = <2 1>;
-			reg = <0x1>;
-			linux,phandle = <0x4>;
-		};
-	};
-
-	mdio@25000 {
-		status = "disabled";
-	};
-
-	mdio@26000 {
-		status = "disabled";
-	};
-
-	enet0: ethernet@b0000 {
-		phy-handle =  <0x3>;
-		phy-connection-type = "rgmii-id";
-
-	};
-
-	enet1: ethernet@b1000 {
-		status = "disabled";
-	};
-
-	enet2: ethernet@b2000 {
-		phy-handle =  <0x4>;
-		phy-connection-type = "rgmii-id";
-	};
-};
-
 /include/ "fsl/p1020si-post.dtsi"

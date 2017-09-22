@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2013 OpenWrt.org
+# Copyright (C) 2017 Chris Blake <chrisrblake93@gmail.com>
 #
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
@@ -7,7 +7,7 @@
 
 define Profile/hiveap-330
 	NAME:=Aerohive HiveAP-330
-	PACKAGES:=kmod-ath9k wpad-mini
+	PACKAGES:=kmod-usb-core kmod-usb2 kmod-usb-storage kmod-fs-ext4 kmod-fs-vfat kmod-ath9k wpad-mini
 endef
 
 define Profile/hiveap-330/Description
