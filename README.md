@@ -48,14 +48,12 @@ Coming Soon
 
 ## Working
 
+### HiveAP-330
+
 - Bootable Image via PXE
 - WiFi
 - NAND
 - USB
-
-### HiveAP-330
-
-- Nothing Yet
 
 ## Notice
 
