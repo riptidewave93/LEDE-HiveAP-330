@@ -41,7 +41,6 @@ Coming Soon
 
 ### HiveAP-330
 
-- Ethernet
 - Sysupgrade
 - TPM
 - LEDs
@@ -51,6 +50,7 @@ Coming Soon
 ### HiveAP-330
 
 - Bootable Image via PXE
+- Ethernet
 - WiFi
 - NAND
 - USB

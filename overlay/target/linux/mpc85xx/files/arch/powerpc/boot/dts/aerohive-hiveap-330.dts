@@ -15,7 +15,7 @@
 	compatible = "aerohive,hiveap330", "fsl,P1020RDB";
 
 	chosen {
-			bootargs = "console=ttyS0,9600 pci=realloc";
+			bootargs = "console=ttyS0,9600";
 		};
 
 	memory {
@@ -56,29 +56,30 @@
 
 			partition@3f00000 {
 				reg = <0x3f00000 0x20000>;
-				label = "Hardware Info";
+				label = "hw-info";
+				read-only;
 			};
 
 			partition@3f20000 {
 				reg = <0x3f20000 0x20000>;
-				label = "Static Boot Info";
+				label = "boot-info";
 				read-only;
 			};
 
 			partition@3f40000 {
 				reg = <0x3f40000 0x20000>;
-				label = "Static Boot Info Backup";
+				label = "boot-info-backup";
 				read-only;
 			};
 
 			partition@3f60000 {
 				reg = <0x3f60000 0x20000>;
-				label = "Uboot Env";
+				label = "u-boot-env";
 			};
 
 			partition@3f80000 {
 				reg = <0x3f80000 0x80000>;
-				label = "Uboot";
+				label = "u-boot";
 				read-only;
 			};
 		};
@@ -92,6 +93,10 @@
 				compatible = "dallas,ds1339";
 				reg = <0x68>;
 			};
+		};
+
+		i2c@3100 {
+			status = "disabled";
 		};
 
 		mdio@24000 {
