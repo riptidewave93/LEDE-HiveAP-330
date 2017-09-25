@@ -23,6 +23,20 @@ zImage:=$(BIN_DIR)/$(IMG_PREFIX)-zImage
 
 DTS_TARGETS = aerohive-hiveap-330 fsl/p1010rdb-pa tl-wdr4900-v1 fsl/p1020rdb
 
+define Build/empty-initramfs
+	-mkdir $(KDIR_TMP)/empty-initramfs; \
+		cd $(KDIR_TMP)/empty-initramfs && touch empty; \
+		find . | cpio -o -H newc | gzip -9n > $(KDIR_TMP)/empty-initramfs.gpio.gz
+
+	-$(STAGING_DIR_HOST)/bin/mkimage -A $(LINUX_KARCH) -O linux -T ramdisk \
+		-C gzip -n "empty initramfs" \
+		-d $(KDIR_TMP)/empty-initramfs.gpio.gz \
+		$(KDIR_TMP)/$(IMG_PREFIX)-empty-initramfs.image
+
+	-cp $(KDIR_TMP)/$(IMG_PREFIX)-empty-initramfs.image \
+		$(BIN_DIR)/$(IMG_PREFIX)-empty-initramfs
+endef
+
 define Image/BuildKernel
 	cp $(KDIR)/zImage $(BIN_DIR)/$(IMG_PREFIX)-zImage
 	$(foreach dts,$(DTS_TARGETS),
@@ -48,6 +62,10 @@ define Image/Build/TPLINK
 		-k $(KDIR)/$(3) \
 		-r $(KDIR)/root.$(1) \
 		-o $(call sysupname,$(1),$(2))
+endef
+
+define Image/Build/Profile/hiveap-330
+	$(call Build/fake-initramfs)
 endef
 
 define Image/Build/Profile/TLWDR4900

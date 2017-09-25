@@ -53,7 +53,6 @@ Technical specs of the TPM can be found at:
 ### HiveAP-330
 
 - Sysupgrade
-- Reset button
 
 ## Working
 
@@ -63,6 +62,7 @@ Technical specs of the TPM can be found at:
 - Ethernet
 - WiFi
 - LEDs
+- Reset button
 - USB
 - TPM
 

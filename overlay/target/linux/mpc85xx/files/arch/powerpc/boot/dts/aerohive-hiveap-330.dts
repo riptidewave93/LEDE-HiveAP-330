@@ -9,12 +9,10 @@
  * option) any later version.
  */
 
-#include <dt-bindings/input/input.h>
-
 /include/ "fsl/p1020si-pre.dtsi"
 / {
 	model = "Aerohive HiveAP-330";
-	compatible = "aerohive,hiveap330";
+	compatible = "aerohive,hiveap330", "fsl,P1020RDB";
 
 	chosen {
 		bootargs = "console=ttyS0,9600";
@@ -38,17 +36,22 @@
 
 			partition@0 {
 				reg = <0x0 0x40000>;
-				label = "DTB Image";
+				label = "dtb";
 			};
 
 			partition@40000 {
-				reg = <0x40000 0x2800000>;
-				label = "App Image";
+				reg = <0x40000 0x80000>;
+				label = "initramfs";
+			};
+
+			partition@80000 {
+				reg = <0x80000 0x2800000>;
+				label = "rootfs";
 			};
 
 			partition@2840000 {
 				reg = <0x2840000 0x800000>;
-				label = "Kernel Image";
+				label = "kernel";
 			};
 
 			partition@3040000 {
@@ -99,20 +102,19 @@
 			lp5521@32 {
 				compatible = "national,lp5521";
 				reg = <0x32>;
-				label = "hiveap-330";
 				clock-mode = /bits/ 8 <2>;
 				chan0 {
-					chan-name = "red:tricolor0";
+					chan-name = "hiveap-330:red:tricolor0";
 					led-cur = /bits/ 8 <0x2f>;
 					max-cur = /bits/ 8 <0x5f>;
 				};
 				chan1 {
-					chan-name = "green:tricolor0";
+					chan-name = "hiveap-330:green:tricolor0";
 					led-cur = /bits/ 8 <0x2f>;
 					max-cur = /bits/ 8 <0x5f>;
 				};
 				chan2 {
-					chan-name = "blue:tricolor0";
+					chan-name = "hiveap-330:blue:tricolor0";
 					led-cur = /bits/ 8 <0x2f>;
 					max-cur = /bits/ 8 <0x5f>;
 				};
@@ -162,6 +164,9 @@
 			phy-connection-type = "rgmii-id";
 		};
 
+		gpio0: gpio-controller@fc00 {
+		};
+
 		usb@22000 {
 			phy_type = "ulpi";
 			dr_mode = "host";
@@ -199,6 +204,16 @@
 				  0x1000000 0x0 0x0
 				  0x1000000 0x0 0x0
 				  0x0 0x100000>;
+		};
+	};
+
+	buttons {
+		compatible = "gpio-keys";
+
+		reset {
+			label = "Reset button";
+			gpios = <&gpio0 8 1>; /* active low */
+			linux,code = <0x198>; /* KEY_RESTART */
 		};
 	};
 };
