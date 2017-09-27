@@ -1,5 +1,5 @@
 /*
- * Aerohive HiveAP 330 Device Tree Source
+ * Aerohive HiveAP-330 Device Tree Source
  *
  * Copyright (C) 2017 Chris Blake <chrisrblake93@gmail.com>
  *
@@ -12,10 +12,11 @@
 /include/ "fsl/p1020si-pre.dtsi"
 / {
 	model = "Aerohive HiveAP-330";
-	compatible = "aerohive,hiveap330", "fsl,P1020RDB";
+	compatible = "aerohive,hiveap-330";
 
 	chosen {
 		bootargs = "console=ttyS0,9600";
+		bootargs-override = "console=ttyS0,9600 root=/dev/mtdblock2";
 	};
 
 	memory {
@@ -40,12 +41,12 @@
 			};
 
 			partition@40000 {
-				reg = <0x40000 0x80000>;
+				reg = <0x40000 0x40000>;
 				label = "initramfs";
 			};
 
 			partition@80000 {
-				reg = <0x80000 0x2800000>;
+				reg = <0x80000 0x27c0000>;
 				label = "rootfs";
 			};
 
@@ -86,6 +87,11 @@
 				reg = <0x3f80000 0x80000>;
 				label = "u-boot";
 				read-only;
+			};
+
+			firmware@0 {
+				reg = <0x0 0x3040000>;
+				label = "firmware";
 			};
 		};
 	};

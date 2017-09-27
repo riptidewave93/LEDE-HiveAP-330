@@ -23,7 +23,7 @@ if [ ! -d "$clonedir" ]; then
   Msg "Cloning Repo..."
   git clone https://github.com/lede-project/source $clonedir
   cd $clonedir
-  git reset --hard 3fbf3ab44f5cebb22e30a4c8681b13341feed6a6
+  git reset --hard b0f8b13331cbf77fae52b873060846f57916a134
   cd - > /dev/null
 fi
 

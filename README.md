@@ -2,7 +2,7 @@
 
 Bringup for the Aerohve HiveAP 330 Access Point on LEDE!
 
-Currently based on commit [3fbf3ab44f5cebb22e30a4c8681b13341feed6a6](https://github.com/lede-project/source/commit/3fbf3ab44f5cebb22e30a4c8681b13341feed6a6)
+Currently based on commit [b0f8b13331cbf77fae52b873060846f57916a134](https://github.com/lede-project/source/commit/b0f8b13331cbf77fae52b873060846f57916a134)
 
 ## Building
 
@@ -28,14 +28,27 @@ Note that you will need to run a modify on the first compile to select the `Free
 
   ```
   dhcp;
-  tftpboot 0x1000000 192.168.1.101:lede-mpc85xx-p1020-initramfs-zImage;
-  tftpboot 0x6000000 192.168.1.101:lede-mpc85xx-p1020-aerohive-hiveap-330.fdt;
+  tftpboot 0x1000000 192.168.1.101:lede-mpc85xx-p1020-hiveap-330-initramfs.zImage;
+  tftpboot 0x6000000 192.168.1.101:lede-mpc85xx-p1020-hiveap-330.fdt;
   bootm 0x1000000 - 0x6000000;
   ```
 
 ## Flashing
 
-Coming Soon!
+1. Follow the Booting instructions above to boot into an initramfs build of LEDE.
+2. Once booted, SCP over a copy of the sysupgrade image from your PC. In the below example, your PC has the IP of 192.168.1.101 and your local user is "user". Be sure to update the command to match your file location and local user.
+
+	```
+	scp user@192.168.1.101:~/lede-mpc85xx-p1020-hiveap-330-sysupgrade.img ~
+	```
+
+3. Now that we have a copy of the sysupgrade file, we can flash it. Note that this process will take a few minutes due to the size of the image.
+
+	```
+	mtd write ~/lede-mpc85xx-p1020-hiveap-330-sysupgrade.img firmware
+	```
+
+4. Reboot, and enjoy LEDE!
 
 ## TPM Notes
 

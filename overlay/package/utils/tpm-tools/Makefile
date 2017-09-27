@@ -12,7 +12,8 @@ PKG_VERSION:=1.3.8
 PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
-PKG_SOURCE_URL:=https://downloads.sourceforge.net/project/trousers/$(PKG_NAME)/$(PKG_VERSION)
+PKG_SOURCE_URL:=https://downloads.sourceforge.net/project/trousers/$(PKG_NAME)/$(PKG_VERSION) \
+				https://mirrors.netix.net/sourceforge/t/tr/trousers/$(PKG_NAME)/$(PKG_VERSION)
 PKG_MD5SUM:=85a978c4e03fefd4b73cbeadde7c4d0b
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
