@@ -16,13 +16,9 @@
 
 #include <linux/stddef.h>
 #include <linux/kernel.h>
-#include <linux/pci.h>
-#include <linux/kdev_t.h>
 #include <linux/delay.h>
-#include <linux/seq_file.h>
 #include <linux/interrupt.h>
 #include <linux/of_platform.h>
-#include <linux/fsl/guts.h>
 
 #include <asm/time.h>
 #include <asm/machdep.h>
@@ -31,8 +27,6 @@
 #include <asm/prom.h>
 #include <asm/udbg.h>
 #include <asm/mpic.h>
-#include <soc/fsl/qe/qe.h>
-#include <soc/fsl/qe/qe_ic.h>
 
 #include <sysdev/fsl_soc.h>
 #include <sysdev/fsl_pci.h>

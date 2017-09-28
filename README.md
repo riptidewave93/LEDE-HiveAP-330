@@ -2,7 +2,7 @@
 
 Bringup for the Aerohve HiveAP 330 Access Point on LEDE!
 
-Currently based on commit [b0f8b13331cbf77fae52b873060846f57916a134](https://github.com/lede-project/source/commit/b0f8b13331cbf77fae52b873060846f57916a134)
+Currently based on commit [00e9a7aacb66b3f00df2002e8210bdb5086d2e0c](https://github.com/lede-project/source/commit/00e9a7aacb66b3f00df2002e8210bdb5086d2e0c)
 
 ## Building
 
@@ -45,7 +45,7 @@ Note that you will need to run a modify on the first compile to select the `Free
 3. Now that we have a copy of the sysupgrade file, we can flash it. Note that this process will take a few minutes due to the size of the image.
 
 	```
-	mtd write ~/lede-mpc85xx-p1020-hiveap-330-sysupgrade.img firmware
+	sysupgrade ~/lede-mpc85xx-p1020-hiveap-330-sysupgrade.img
 	```
 
 4. Reboot, and enjoy LEDE!
