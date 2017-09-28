@@ -52,13 +52,13 @@ endif
 endef
 
 define Image/Build/Aerohive
-	cp $(KDIR)/zImage $(BIN_DIR)/$(IMG_PREFIX)-$(2).zImage
+	$(call Build/empty-initramfs)
 ifeq ($(2),hiveap-330)
 	( \
 		dd if=$(BIN_DIR)/$(IMG_PREFIX)-$(2).fdt bs=256k conv=sync; \
 		dd if=$(KDIR_TMP)/$(IMG_PREFIX)-empty-initramfs.image bs=256k conv=sync; \
 		dd if=$(BIN_DIR)/$(IMG_PREFIX)-root.$(1) bs=40704k conv=sync; \
-		dd if=$(BIN_DIR)/$(IMG_PREFIX)-$(2).zImage conv=sync; \
+		dd if=$(KDIR)/zImage conv=sync; \
 	) > $(BIN_DIR)/$(IMG_PREFIX)-$(2)-sysupgrade.img
 endif
 endef
@@ -77,9 +77,7 @@ define Image/Build/TPLINK
 endef
 
 define Image/Build/Profile/hiveap-330
-	$(call Build/empty-initramfs)
 	$(call Image/Build/Aerohive,$(1),hiveap-330)
-
 endef
 
 define Image/Build/Profile/TLWDR4900

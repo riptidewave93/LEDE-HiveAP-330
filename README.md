@@ -65,7 +65,7 @@ Technical specs of the TPM can be found at:
 
 ### HiveAP-330
 
-- Sysupgrade
+- You tell me!
 
 ## Working
 
@@ -78,6 +78,7 @@ Technical specs of the TPM can be found at:
 - Reset button
 - USB
 - TPM
+- Sysupgrade
 
 ## Notice
 

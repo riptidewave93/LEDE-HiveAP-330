@@ -57,7 +57,8 @@
 
 			partition@3040000 {
 				reg = <0x3040000 0xec0000>;
-				label = "JFFS2";
+				label = "stock-jffs2";
+				read-only;
 			};
 
 			partition@3f00000 {
