@@ -16,7 +16,7 @@
 
 	chosen {
 		bootargs = "console=ttyS0,9600";
-		bootargs-override = "console=ttyS0,9600 root=/dev/mtdblock2";
+		bootargs-override = "console=ttyS0,9600 noinitrd";
 	};
 
 	memory {
