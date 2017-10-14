@@ -2,7 +2,7 @@
 
 Bringup for the Aerohve HiveAP 330 Access Point on LEDE!
 
-Currently based on commit [00e9a7aacb66b3f00df2002e8210bdb5086d2e0c](https://github.com/lede-project/source/commit/00e9a7aacb66b3f00df2002e8210bdb5086d2e0c)
+**NOTE: This repo is NO LONGER MAINTAINED as these changes were merged upstream. Refer to https://github.com/lede-project/source/commit/f2b7d9dc1ca3d33f14961cf2885639f4f9e8965e and enjoy the official LEDE nightles!**
 
 ## Building
 
